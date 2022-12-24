@@ -32,7 +32,6 @@ body {
     padding: 50px;
     position: relative;
     width: auto;
-    gap: 64px;
 }
 
 .header {    
@@ -64,6 +63,10 @@ body {
     font-weight: 400;
     line-height: 1.4em;
     color: rgba(255, 255, 255, 0.75);
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    
 }
 
 .prompt-container {
