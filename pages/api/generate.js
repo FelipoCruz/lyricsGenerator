@@ -10,6 +10,7 @@ const basePromptPrefix =
 
 `
 Write song lyrics from the information in the next paragraph. The song must have a title, 2 verses and 1 chorus.
+Do not write anything before the title.
 `
 const generateAction = async (req, res) => {
   // Run first prompt

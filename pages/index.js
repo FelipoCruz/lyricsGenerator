@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import buildspaceLogo from '../assets/buildspace-logo.png';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Script from 'next/script'
 import Coffee from '../components/Coffee';
 
@@ -16,8 +16,7 @@ const Home = () => {
 
   const callGenerateEndpoint = async () => {
     setIsGenerating(true);
-    
-    console.log("Calling OpenAI...")
+    console.log(userInput)
     const response = await fetch('/api/generate', {
       method: 'POST',
       headers: {
@@ -28,13 +27,15 @@ const Home = () => {
 
     const data = await response.json();
     const { output } = data;
-    console.log("OpenAI replied...", output.text)
 
     setApiOutput(`${output.text}`)
     setIsGenerating(false);
-
-    await scroll();
   }
+
+  useEffect(() => {
+    // 👇️ scroll to bottom every time output changes
+    ref.current?.scrollIntoView({behavior: 'smooth'});
+  }, [apiOutput]);
   
 
   const scroll = async () => {
@@ -50,7 +51,7 @@ const Home = () => {
   return (
     <div className="root">
       <Head>
-        <title>GPT-3 Writer | buildspace</title>
+        <title>Magic Lyrics Generator</title>
       </Head>
       <div className="container">
         <Coffee></Coffee>
@@ -74,7 +75,7 @@ const Home = () => {
               {isGenerating ? <span className="loader"></span> : <p>Generate</p>}
             </div>
           </a>
-        </div> 
+        </div>
 
         <div className="output-header">
           <h3 ref={ref} >Output:</h3>
